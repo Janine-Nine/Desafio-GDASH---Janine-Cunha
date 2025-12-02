@@ -1,0 +1,16 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Copy requirements and install dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the collector script
+COPY weather_collector.py .
+
+# Make it executable
+RUN chmod +x weather_collector.py
+
+# Run the collector
+CMD ["python", "weather_collector.py"]

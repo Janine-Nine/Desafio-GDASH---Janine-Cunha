@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0ea5a4" />
+  <meta name="description" content="Dashboard de Clima — React + Vite + Tailwind + shadcn/ui + HTML versão estática" />
+
+  <title>Painel de Controle do Clima</title>
+
+  <!-- Fonte opcional -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <header>
+    <img src="img/gdash-logo.png" alt="GDASH Logo" class="logo" />
+    <h1>Painel de Controle do Clima</h1>
+  </header>
+
+  <main>
+
+    <!-- ========================= -->
+    <!-- SEÇÃO: IMAGEM DE DESTAQUE -->
+    <!-- ========================= -->
+    <section id="hero">
+      <h2>Visão Geral do Clima</h2>
+
+      <!-- coloque a imagem que quiser aqui -->
+      <img src="img/clima-banner.jpg" alt="Imagem ilustrativa do clima" class="img-destaque" />
+    </section>
+
+    <!-- ========================= -->
+    <!-- SEÇÃO: CARTAS PRINCIPAIS -->
+    <!-- ========================= -->
+    <section id="cards-clima">
+      <h2>Dados Atuais</h2>
+
+      <div class="cards-container">
+        <div class="card">Temperatura Atual: <span>25 °C</span></div>
+        <div class="card">Umidade Atual: <span>60 %</span></div>
+        <div class="card">Velocidade do Vento: <span>15 km/h</span></div>
+        <div class="card">Condição: <span>Ensolarado</span></div>
+      </div>
+    </section>
+
+    <!-- ================= -->
+    <!-- SEÇÃO: GRÁFICOS  -->
+    <!-- ================= -->
+    <section id="graficos">
+      <h2>Gráficos Climáticos</h2>
+
+      <!-- área onde você pode colocar imagens de gráficos -->
+      <div class="grafico">
+        <p>Temperatura ao longo do tempo</p>
+        <img src="img/grafico-temperatura.png" alt="Gráfico de temperatura" />
+      </div>
+
+      <div class="grafico">
+        <p>Probabilidade de chuva ao longo do tempo</p>
+        <img src="img/grafico-chuva.png" alt="Gráfico probabilidade de chuva" />
+      </div>
+    </section>
+
+    <!-- ======================= -->
+    <!-- SEÇÃO: TABELA DE REGISTRO -->
+    <!-- ======================= -->
+    <section id="tabela-registros">
+      <h2>Registros de Clima</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Data/Hora</th>
+            <th>Local</th>
+            <th>Condição</th>
+            <th>Temperatura</th>
+            <th>Umidade</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>01/12 08:00</td>
+            <td>São Paulo</td>
+            <td>Ensolarado</td>
+            <td>25 °C</td>
+            <td>60 %</td>
+          </tr>
+          <tr>
+            <td>01/12 12:00</td>
+            <td>São Paulo</td>
+            <td>Nublado</td>
+            <td>22 °C</td>
+            <td>65 %</td>
+          </tr>
+          <tr>
+            <td>01/12 18:00</td>
+            <td>São Paulo</td>
+            <td>Chuviscos</td>
+            <td>20 °C</td>
+            <td>80 %</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="botoes-exportar">
+        <button onclick="window.location.href='/api/weather/export.csv'">Exportar CSV</button>
+        <button onclick="window.location.href='/api/weather/export.xlsx'">Exportar XLSX</button>
+      </div>
+    </section>
+
+    <!-- ===================== -->
+    <!-- SEÇÃO: INSIGHTS IA -->
+    <!-- ===================== -->
+    <section id="insights">
+      <h2>Insights de IA</h2>
+
+      <p id="texto-explicativo">
+        Texto explicativo: "Alta chance de chuva nas próximas horas"
+      </p>
+
+      <!-- Cartões coloridos -->
+      <div id="cards-alertas">
+        <div class="alerta alerta-quente">Calor extremo</div>
+        <div class="alerta alerta-frio">Frio intenso</div>
+        <div class="alerta alerta-normal">Clima agradável</div>
+      </div>
+
+      <div class="botoes-ia">
+        <button>Calcular Temperatura Média</button>
+        <button>Calcular Umidade Média</button>
+        <button>Detectar Tendência</button>
+        <button>Pontuar Conforto Climático</button>
+        <button>Classificar Dia</button>
+        <button>Gerar Alerta</button>
+        <button>Gerar Resumo</button>
+      </div>
+
+      <p id="resumo-ia">
+        Resumo: "Nos últimos 3 dias, a temperatura média foi de 28°C,
+        com alta umidade e tendência de chuva no fim da tarde."
+      </p>
+    </section>
+
+    <!-- ===================== -->
+    <!-- SEÇÃO: PANORAMA -->
+    <!-- ===================== -->
+    <section id="panorama">
+      <h2>Panorama Climático</h2>
+      <img src="img/panorama-clima.png" alt="Panorama do clima" class="img-destaque" />
+    </section>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2025 GDASH - Sistema de Monitoramento de Energia Renovável</p>
+    <p><a href="/">Voltar para o Dashboard React</a></p>
+  </footer>
+
+</body>
+
+</html>

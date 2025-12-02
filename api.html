@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GDASH - Documentação da API</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <!-- NAV -->
+  <nav>
+    <img src="img/gdash-logo.png" alt="GDASH Logo" class="nav-logo" />
+    <a href="index.html">Dashboard</a>
+    <a href="api.html">API</a>
+    <a href="about.html">Sobre</a>
+  </nav>
+
+  <main>
+    <h1>Documentação da API</h1>
+    
+    <section>
+      <h2>Autenticação</h2>
+      <p>A API utiliza autenticação via JWT (JSON Web Tokens).</p>
+      <pre><code>POST /api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@gdash.com",
+  "password": "123456"
+}</code></pre>
+    </section>
+
+    <section>
+      <h2>Endpoints - Clima</h2>
+      
+      <h3>Listar Logs Climáticos</h3>
+      <pre><code>GET /api/weather/logs</code></pre>
+      
+      <h3>Criar Log Climático</h3>
+      <pre><code>POST /api/weather/logs
+Authorization: Bearer {token}
+Content-Type: application/json
+
+{
+  "timestamp": "2025-01-01T12:00:00Z",
+  "location": "Pelotas, RS, BR",
+  "temperature": 22.3,
+  "humidity": 78,
+  "windSpeed": 12,
+  "condition": "Cloudy",
+  "precipitationProb": 40
+}</code></pre>
+      
+      <h3>Exportar Dados</h3>
+      <pre><code>GET /api/weather/export.csv
+GET /api/weather/export.xlsx</code></pre>
+    </section>
+
+    <section>
+      <h2>Endpoints - Insights</h2>
+      
+      <h3>Listar Insights</h3>
+      <pre><code>GET /api/insights</code></pre>
+      
+      <h3>Gerar Novos Insights</h3>
+      <pre><code>POST /api/insights/generate
+Authorization: Bearer {token}</code></pre>
+      
+      <h3>Análise de Eficiência</h3>
+      <pre><code>GET /api/insights/efficiency</code></pre>
+    </section>
+
+    <section>
+      <h2>Endpoints - Usuários</h2>
+      
+      <h3>Listar Usuários</h3>
+      <pre><code>GET /api/users
+Authorization: Bearer {token}</code></pre>
+      
+      <h3>Criar Usuário</h3>
+      <pre><code>POST /api/users
+Authorization: Bearer {token}
+Content-Type: application/json
+
+{
+  "name": "Janine Cunha",
+  "email": "janinecunha213@gmail.com",
+  "password": "securepass123",
+  "role": "User",
+  "status": "Active"
+}</code></pre>
+    </section>
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer class="footer text-center py-10 mt-12 text-sm">
+    <p><strong>GDASH 2025 — Construído por Janine Cunha</strong></p>
+  </footer>
+
+  <script src="assets/js/script.js"></script>
+</body>
+</html>

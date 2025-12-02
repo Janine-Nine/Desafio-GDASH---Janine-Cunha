@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: gdash-postgres
+    environment:
+      POSTGRES_USER: gdash
+      POSTGRES_PASSWORD: gdash123
+      POSTGRES_DB: gdash_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gdash"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis Message Broker
+  redis:
+    image: redis:7-alpine
+    container_name: gdash-redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  # Python Weather Collector
+  python-collector:
+    build:
+      context: ./python
+      dockerfile: Dockerfile
+    container_name: gdash-python-collector
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_QUEUE: weather_queue
+      COLLECTION_INTERVAL: 3600  # 1 hour
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # Node.js Worker
+  worker:
+    build:
+      context: ./worker
+      dockerfile: Dockerfile
+    container_name: gdash-worker
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_QUEUE: weather_queue
+      API_URL: http://api:5000
+      POLL_INTERVAL: 5000
+    depends_on:
+      - redis
+      - api
+    restart: unless-stopped
+
+  # NestJS API (Actually Express in this case)
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gdash-api
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://gdash:gdash123@postgres:5432/gdash_db
+      JWT_SECRET: gdash-production-secret-2025
+      PORT: 5000
+    ports:
+      - "5000:5000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

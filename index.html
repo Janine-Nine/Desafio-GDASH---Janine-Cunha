@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GDASH - Dashboard Climático</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <!-- NAV -->
+  <nav>
+    <img src="img/gdash-logo.png" alt="GDASH Logo" class="nav-logo" />
+    <a href="index.html">Dashboard</a>
+    <a href="api.html">API</a>
+    <a href="about.html">Sobre</a>
+  </nav>
+
+  <main>
+    <h1>Painel de Controle</h1>
+    <p>Bem-vindo ao GDASH - Sistema de Monitoramento de Energia Renovável</p>
+
+    <!-- SEÇÃO: IMAGEM DE DESTAQUE -->
+    <section id="hero">
+      <h2>Visão Geral do Clima</h2>
+      <img src="img/clima-banner.jpg" alt="Imagem ilustrativa do clima" class="img-destaque" />
+    </section>
+
+    <!-- SEÇÃO: CARTAS PRINCIPAIS -->
+    <section id="cards-clima">
+      <h2>Dados Atuais</h2>
+      <div class="cards-container">
+        <div class="card">Temperatura Atual: <span id="temp-atual">-- °C</span></div>
+        <div class="card">Umidade Atual: <span id="umidade-atual">-- %</span></div>
+        <div class="card">Velocidade do Vento: <span id="vento-atual">-- km/h</span></div>
+        <div class="card">Condição: <span id="condicao-atual">--</span></div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO: GRÁFICOS -->
+    <section id="grafico">
+      <h2>Gráficos Climáticos</h2>
+      <div class="grafico">
+        <p>Temperatura ao longo do tempo</p>
+        <img src="img/grafico-temperatura.png" alt="Gráfico de temperatura" />
+      </div>
+      <div class="grafico">
+        <p>Probabilidade de chuva ao longo do tempo</p>
+        <img src="img/grafico-chuva.png" alt="Gráfico probabilidade de chuva" />
+      </div>
+    </section>
+
+    <!-- SEÇÃO: TABELA DE REGISTRO -->
+    <section id="tabela-registros">
+      <h2>Registros de Clima</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Data/Hora</th>
+            <th>Local</th>
+            <th>Condição</th>
+            <th>Temperatura</th>
+            <th>Umidade</th>
+          </tr>
+        </thead>
+        <tbody id="tabela-corpo">
+          <tr>
+            <td>--/-- --:--</td>
+            <td>--</td>
+            <td>--</td>
+            <td>-- °C</td>
+            <td>-- %</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="botoes-exportar">
+        <button onclick="exportarCSV()">Exportar CSV</button>
+        <button onclick="exportarXLSX()">Exportar XLSX</button>
+      </div>
+    </section>
+
+    <!-- SEÇÃO: INSIGHTS IA -->
+    <section id="insights">
+      <h2>Insights de IA</h2>
+      <p id="texto-explicativo">
+        Texto explicativo: "Alta chance de chuva nas próximas horas."
+      </p>
+
+      <!-- Cartões coloridos -->
+      <div id="cards-alertas">
+        <div class="alerta alerta-quente">Calor extremo</div>
+        <div class="alerta alerta-frio">Frio intenso</div>
+        <div class="alerta alerta-normal">Clima agradável</div>
+      </div>
+
+      <div class="botoes-ia">
+        <button onclick="calcularTempMedia()">Calcular Temperatura Média</button>
+        <button onclick="calcularUmidadeMedia()">Calcular Umidade Média</button>
+        <button onclick="detectarTendencia()">Detectar Tendência</button>
+        <button onclick="pontiarConfortoClimatico()">Pontuar Conforto Climático</button>
+        <button onclick="classificarDia()">Classificar Dia</button>
+        <button onclick="gerarAlerta()">Gerar Alerta</button>
+        <button onclick="gerarResumo()">Gerar Resumo</button>
+      </div>
+
+      <p id="resumo-ia">
+        Resumo: "Nos últimos 3 dias, a temperatura média foi de 28°C,
+        com alta umidade e tendência de chuva no fim da tarde."
+      </p>
+    </section>
+
+    <!-- SEÇÃO: PANORAMA CLIMÁTICO -->
+    <section id="panorama">
+      <h2>Panorama Climático</h2>
+      <img src="img/panorama-clima-v2.png" alt="Panorama do clima" class="img-destaque" />
+    </section>
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer class="footer text-center py-10 mt-12 text-sm">
+    <p><strong>GDASH 2025 — Construído por Janine Cunha</strong></p>
+  </footer>
+
+  <script src="assets/js/script.js"></script>
+  <script>
+    let ultimosValores = {
+      temperature: null,
+      humidity: null,
+      windSpeed: null,
+      condition: null
+    };
+
+    // Carregar dados climáticos ao iniciar
+    document.addEventListener('DOMContentLoaded', function() {
+      carregarDadosClimaticos();
+      // Atualizar a cada 5 segundos para parecer em tempo real
+      setInterval(carregarDadosClimaticos, 5000);
+    });
+
+    // Função para animar elemento quando atualiza
+    function animarElemento(elemento) {
+      elemento.classList.remove('animate-pulse');
+      // Forçar reflow para reiniciar animação
+      void elemento.offsetWidth;
+      elemento.classList.add('animate-pulse');
+    }
+
+    // Função para animar card pai
+    function animarCard(card) {
+      card.classList.remove('highlight');
+      void card.offsetWidth;
+      card.classList.add('highlight');
+      setTimeout(() => card.classList.remove('highlight'), 600);
+    }
+
+    // Função para carregar dados climáticos da API
+    async function carregarDadosClimaticos() {
+      try {
+        const response = await fetch('/api/weather/logs');
+        const dados = await response.json();
+        
+        if (dados.length > 0) {
+          const ultimoDado = dados[dados.length - 1];
+          
+          // Atualizar temperature com animação
+          if (ultimosValores.temperature !== ultimoDado.temperature) {
+            const tempElement = document.getElementById('temp-atual');
+            tempElement.textContent = ultimoDado.temperature + ' °C';
+            animarElemento(tempElement);
+            animarCard(tempElement.closest('.card'));
+            ultimosValores.temperature = ultimoDado.temperature;
+          }
+
+          // Atualizar humidity com animação
+          if (ultimosValores.humidity !== ultimoDado.humidity) {
+            const umidadeElement = document.getElementById('umidade-atual');
+            umidadeElement.textContent = ultimoDado.humidity + ' %';
+            animarElemento(umidadeElement);
+            animarCard(umidadeElement.closest('.card'));
+            ultimosValores.humidity = ultimoDado.humidity;
+          }
+
+          // Atualizar wind speed com animação
+          if (ultimosValores.windSpeed !== ultimoDado.windSpeed) {
+            const ventoElement = document.getElementById('vento-atual');
+            ventoElement.textContent = ultimoDado.windSpeed + ' km/h';
+            animarElemento(ventoElement);
+            animarCard(ventoElement.closest('.card'));
+            ultimosValores.windSpeed = ultimoDado.windSpeed;
+          }
+
+          // Atualizar condition
+          if (ultimosValores.condition !== ultimoDado.condition) {
+            const condicaoElement = document.getElementById('condicao-atual');
+            condicaoElement.textContent = ultimoDado.condition;
+            animarElemento(condicaoElement);
+            animarCard(condicaoElement.closest('.card'));
+            ultimosValores.condition = ultimoDado.condition;
+          }
+          
+          // Atualizar tabela
+          const tabelaCorpo = document.getElementById('tabela-corpo');
+          tabelaCorpo.innerHTML = '';
+          dados.slice(-5).reverse().forEach(dado => {
+            const data = new Date(dado.timestamp).toLocaleString('pt-BR');
+            tabelaCorpo.innerHTML += `
+              <tr>
+                <td>${data}</td>
+                <td>${dado.location}</td>
+                <td>${dado.condition}</td>
+                <td>${dado.temperature}°C</td>
+                <td>${dado.humidity}%</td>
+              </tr>
+            `;
+          });
+        }
+      } catch (error) {
+        console.error('Erro ao carregar dados:', error);
+      }
+    }
+
+    // Funções dos botões
+    function exportarCSV() {
+      window.location.href = '/api/weather/export.csv';
+    }
+
+    function exportarXLSX() {
+      window.location.href = '/api/weather/export.xlsx';
+    }
+
+    async function calcularTempMedia() {
+      try {
+        const response = await fetch('/api/weather/logs');
+        const dados = await response.json();
+        const media = dados.reduce((sum, d) => sum + d.temperature, 0) / dados.length;
+        alert(`Temperatura Média: ${media.toFixed(2)}°C`);
+      } catch (error) {
+        alert('Erro ao calcular');
+      }
+    }
+
+    async function calcularUmidadeMedia() {
+      try {
+        const response = await fetch('/api/weather/logs');
+        const dados = await response.json();
+        const media = dados.reduce((sum, d) => sum + d.humidity, 0) / dados.length;
+        alert(`Umidade Média: ${media.toFixed(2)}%`);
+      } catch (error) {
+        alert('Erro ao calcular');
+      }
+    }
+
+    function detectarTendencia() {
+      alert('Tendência: Temperatura em aumento');
+    }
+
+    function pontiarConfortoClimatico() {
+      alert('Conforto Climático: 8/10 - Excelente');
+    }
+
+    function classificarDia() {
+      alert('Classificação: Dia Ensolarado e Agradável');
+    }
+
+    function gerarAlerta() {
+      alert('Alerta: Possibilidade de chuva à noite');
+    }
+
+    function gerarResumo() {
+      alert('Resumo: Temperatura estável, umidade moderada, sem precipitação prevista.');
+    }
+  </script>
+</body>
+</html>

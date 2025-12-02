@@ -1,0 +1,289 @@
+/* Global */
+body {
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f3f5f7;
+  color: #222;
+}
+
+header {
+  background: #0ea5a4;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+header .logo {
+  width: 150px;
+  height: auto;
+  border-radius: 8px;
+}
+
+h1, h2 {
+  margin: 0;
+  padding: 10px 0;
+}
+
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Hero / imagem principal */
+#hero {
+  text-align: center;
+  padding: 20px;
+}
+
+.img-destaque {
+  width: 100%;
+  max-width: 900px;
+  border-radius: 12px;
+  margin-top: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Cards principais */
+#cards-clima {
+  padding: 20px;
+}
+
+.cards-container {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  flex: 1;
+  min-width: 200px;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  font-size: 1.1rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card span {
+  font-weight: 700;
+  color: #0ea5a4;
+  font-size: 1.3rem;
+}
+
+/* Gráficos */
+#grafico, #graficos {
+  padding: 20px;
+}
+
+.grafico {
+  background: white;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.grafico p {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.grafico img {
+  width: 100%;
+  max-width: 700px;
+  margin-top: 10px;
+  border-radius: 8px;
+}
+
+/* Tabela */
+#tabela-registros {
+  padding: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+thead {
+  background: #0ea5a4;
+  color: white;
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: center;
+  border: 1px solid #e0e0e0;
+}
+
+tbody tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+tbody tr:hover {
+  background: #e8f4f4;
+}
+
+.botoes-exportar {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+button {
+  padding: 12px 20px;
+  border: none;
+  background: #0ea5a4;
+  color: white;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background 0.2s, transform 0.1s;
+}
+
+button:hover {
+  background: #0c908f;
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* Insights IA */
+#insights {
+  padding: 20px;
+}
+
+#texto-explicativo {
+  background: #fff3cd;
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 4px solid #ffc107;
+  font-weight: 500;
+}
+
+#cards-alertas {
+  display: flex;
+  gap: 15px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.alerta {
+  padding: 20px;
+  flex: 1;
+  min-width: 150px;
+  text-align: center;
+  color: white;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
+}
+
+.alerta:hover {
+  transform: scale(1.03);
+}
+
+/* cores dos alertas */
+.alerta-quente {
+  background: linear-gradient(135deg, #e63946, #ff6b6b);
+}
+
+.alerta-frio {
+  background: linear-gradient(135deg, #457b9d, #5a9fd4);
+}
+
+.alerta-normal {
+  background: linear-gradient(135deg, #2a9d8f, #40c9a2);
+}
+
+.botoes-ia {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.botoes-ia button {
+  background: #1d3557;
+}
+
+.botoes-ia button:hover {
+  background: #2a4a6f;
+}
+
+#resumo-ia {
+  margin-top: 20px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  line-height: 1.6;
+  border-left: 4px solid #0ea5a4;
+}
+
+/* Panorama */
+#panorama {
+  padding: 20px;
+  text-align: center;
+}
+
+/* Footer */
+footer {
+  background: #1d3557;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
+}
+
+footer a {
+  color: #0ea5a4;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .cards-container {
+    flex-direction: column;
+  }
+  
+  #cards-alertas {
+    flex-direction: column;
+  }
+  
+  .botoes-ia {
+    flex-direction: column;
+  }
+  
+  header .logo {
+    width: 100px;
+  }
+}
